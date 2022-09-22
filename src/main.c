@@ -5,8 +5,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "../include/vector.h"
-#include "../include/snake.h"
+#include "./include/vector.h"
+#include "./include/snake.h"
 
 // #define GAME_SPEED 100000
 // #define GAME_UP 'w'
