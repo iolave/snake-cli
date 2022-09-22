@@ -7,6 +7,7 @@
 
 #include "./include/vector.h"
 #include "./include/snake.h"
+#include "./controllers/keyboard.c"
 
 // #define GAME_SPEED 100000
 // #define GAME_UP 'w'
@@ -35,12 +36,41 @@
 //     *snake = node;
 // }
 
+#define CONTROLLER_UP 259
+#define CONTROLLER_DOWN 258
+#define CONTROLLER_LEFT 260
+#define CONTROLLER_RIGHT 261
+
 int main() {
     struct Snake *snake = NULL;
+
     // feedSnake(&snake);
-    printf("%d\n", snakeLength(snake));
+    // printf("%d\n", snakeLength(snake));
 
     free(snake);
+
+
+    initscr();
+    nodelay(stdscr, TRUE);
+    cbreak();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
+
+    int ch;
+
+    do {
+        ch = getch();
+        printw("(%d, %d)\n", calculateVector(ch).x, calculateVector(ch).y);
+        if(calculateVector(ch).y == 1) {
+            endwin();
+            return(1);
+        }
+        refresh();
+        sleep(1);
+    } while(true);
+
+ 
 
     // static const char quitMsg[] = "Press Q to Quit";
     // static const char startMsg[] = "Press any key to start";
