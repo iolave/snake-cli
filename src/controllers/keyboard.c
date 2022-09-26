@@ -1,11 +1,11 @@
-#include "../include/vector.h"
+#include <vector.h>
 
 #define CONTROLLER_UP 259
 #define CONTROLLER_DOWN 258
 #define CONTROLLER_LEFT 260
 #define CONTROLLER_RIGHT 261
 
-struct XYVector calculateVector(int keystroke) {
+struct XYVector calculateDirection(int keystroke) {
     struct XYVector vector;
     vector.x = 0;
     vector.y = 0;
@@ -16,4 +16,4 @@ struct XYVector calculateVector(int keystroke) {
     else if (keystroke == CONTROLLER_RIGHT) vector.x = 1;
 
     return vector;
-}
+} 

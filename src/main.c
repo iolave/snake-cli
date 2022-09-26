@@ -5,8 +5,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "./include/vector.h"
-#include "./include/snake.h"
+#include <vector.h>
+#include "./snake/snake.h"
 #include "./controllers/keyboard.c"
 
 // #define GAME_SPEED 100000
@@ -44,11 +44,11 @@
 int main() {
     struct Snake *snake = NULL;
 
-    // feedSnake(&snake);
-    // printf("%d\n", snakeLength(snake));
+    feedSnake(&snake);
+    printf("%d\n", snakeLength(snake));
 
     free(snake);
-
+    return 0;
 
     initscr();
     nodelay(stdscr, TRUE);
@@ -61,8 +61,8 @@ int main() {
 
     do {
         ch = getch();
-        printw("(%d, %d)\n", calculateVector(ch).x, calculateVector(ch).y);
-        if(calculateVector(ch).y == 1) {
+        printw("(%d, %d)\n", calculateDirection(ch).x, calculateDirection(ch).y);
+        if(calculateDirection(ch).y == 1) {
             endwin();
             return(1);
         }
