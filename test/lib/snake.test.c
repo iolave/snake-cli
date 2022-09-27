@@ -24,36 +24,46 @@ void test_snake_snake_snakeLength(void) {
     free(snake);
 }
 
-// TODO
 void test_snake_snake_feedSnake(void) {
-    // // Defining a snake to be fed
-    struct Snake *snakeHead = NULL;
-    struct Snake *newNode = malloc(sizeof(struct Snake));
-
-    Before feeding
-    newNode->x = 0;
-    newNode->y = 0;
-    newNode->next = snakeHead;
-    snakeHead = newNode;
-
-    newNode->x = 0;
-    newNode->y = 1;
-    newNode->next = snakeHead;
-    snakeHead = newNode;
-
-    newNode->x = 0;
-    newNode->y = 2;
-    newNode->next = snakeHead;
-    snakeHead = newNode;
+    struct Snake *snakeHead;
     
-    // Node added when fed
-    newNode->x = snakeHead->x;
-    newNode->y = snakeHead->y;
-    newNode->next = snakeHead;
-    snakeHead = newNode;
+    /*
+     * When feeding the snake for the first time
+     * it should set the head node (x,y) postiton 
+     * to (0,0).
+     */
+    snakeHead = NULL;
+    feedSnake(&snakeHead);
 
-    TEST_ASSERT_EQUAL_INT(0, 1);
+    TEST_ASSERT_EQUAL_INT(0,snakeHead->x);
+    TEST_ASSERT_EQUAL_INT(0,snakeHead->y);
+    // TODO freeSnake
 
-    free(snakeHead);
-    free(newNode);
+
+    /*
+     * When feeding the snake every other time
+     * it should set the head node postition to
+     * the previous head (x,y) postition
+     * position.
+     */
+    // Testing a snake from scratch
+    snakeHead = NULL; 
+    feedSnake(&snakeHead);
+    feedSnake(&snakeHead);
+
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
+    // TODO freeSnake
+
+
+    // Testing a snake from in a random (x,y) position
+    snakeHead = NULL; 
+    feedSnake(&snakeHead);
+    snakeHead->x = 65;
+    snakeHead->y = 32;
+    feedSnake(&snakeHead);
+    
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
+    // TODO freeSnake
 }
