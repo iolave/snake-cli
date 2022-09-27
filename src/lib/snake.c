@@ -1,24 +1,30 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include "snake.h"
 
-struct Snake {
-    int x;
-    int y;
-    struct Snake *next;
-};
-
-void feedSnake(struct Snake **snake) {
-    // Creating a new snake node
+void feedSnake(struct Snake **snakeHead) {
     struct Snake *newNode = malloc(sizeof(struct Snake));
+    struct Snake *currentNode = NULL;
+
+    if (*snakeHead == NULL) {
+        newNode->x = 0;
+        newNode->y = 0;
+        newNode->next = *snakeHead;
+        *snakeHead = newNode;
+        return;
+    }
     
     // Setting new node values
-    newNode->x = 0;
-    newNode->y = 0;
+    currentNode = *snakeHead;
+    newNode->x = currentNode->x;
+    newNode->y = currentNode->y;
     
     // New node points to the rest of the snake
-    newNode->next = *snake;
+    newNode->next = *snakeHead;
 
     // The new node plus the given snake becomes the new snake
-    *snake = newNode;
+    *snakeHead = newNode;
+    return;
 }
 
 int snakeLength(struct Snake *snake) {
