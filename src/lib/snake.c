@@ -1,10 +1,5 @@
 #include <stdlib.h>
-
-struct Snake {
-    int x;
-    int y;
-    struct Snake *next;
-};
+#include "snake.h"
 
 void feedSnake(struct Snake **snake) {
     // Creating a new snake node
