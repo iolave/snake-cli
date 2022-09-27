@@ -5,9 +5,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#include <snake.h>
 #include <vector.h>
-#include "./snake/snake.h"
-#include "./controllers/keyboard.c"
+#include "controllers/keyboard.c"
 
 // #define GAME_SPEED 100000
 // #define GAME_UP 'w'
@@ -35,11 +35,6 @@
 //     // The new node plus the given snake becomes the new snake
 //     *snake = node;
 // }
-
-#define CONTROLLER_UP 259
-#define CONTROLLER_DOWN 258
-#define CONTROLLER_LEFT 260
-#define CONTROLLER_RIGHT 261
 
 int main() {
     struct Snake *snake = NULL;

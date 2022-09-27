@@ -4,11 +4,9 @@
  *   \brief Data structure that
  *      stores an (X, Y) vector.
 **/
-struct XYVector;
 struct XYVector {
     int x;
     int y;
 };
-
 #endif
 

@@ -1,5 +1,3 @@
-#include "./snake.c"
-
 #ifndef SNAKE_H_
 #define SNAKE_H_
 
