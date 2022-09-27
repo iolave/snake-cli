@@ -15,6 +15,7 @@ int main() {
     // TESTING src/snake/snake.c
     RUN_TEST(test_snake_snake_snakeLength);
     RUN_TEST(test_snake_snake_feedSnake);
+    RUN_TEST(test_snake_snake_freeSnake);
 
     return UNITY_END();
 }
