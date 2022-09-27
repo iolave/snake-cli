@@ -26,5 +26,34 @@ void test_snake_snake_snakeLength(void) {
 
 // TODO
 void test_snake_snake_feedSnake(void) {
+    // // Defining a snake to be fed
+    struct Snake *snakeHead = NULL;
+    struct Snake *newNode = malloc(sizeof(struct Snake));
+
+    Before feeding
+    newNode->x = 0;
+    newNode->y = 0;
+    newNode->next = snakeHead;
+    snakeHead = newNode;
+
+    newNode->x = 0;
+    newNode->y = 1;
+    newNode->next = snakeHead;
+    snakeHead = newNode;
+
+    newNode->x = 0;
+    newNode->y = 2;
+    newNode->next = snakeHead;
+    snakeHead = newNode;
+    
+    // Node added when fed
+    newNode->x = snakeHead->x;
+    newNode->y = snakeHead->y;
+    newNode->next = snakeHead;
+    snakeHead = newNode;
+
     TEST_ASSERT_EQUAL_INT(0, 1);
+
+    free(snakeHead);
+    free(newNode);
 }
