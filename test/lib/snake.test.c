@@ -23,3 +23,8 @@ void test_snake_snake_snakeLength(void) {
 
     free(snake);
 }
+
+// TODO
+void test_snake_snake_feedSnake(void) {
+    TEST_ASSERT_EQUAL_INT(0, 1);
+}
