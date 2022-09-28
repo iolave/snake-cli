@@ -26,14 +26,14 @@ void test_snake_snake_snakeLength(void) {
     snake = NULL;
     for(i = 0;i < foodAmt;i = i + 1) feedSnake(&snake);
     TEST_ASSERT_EQUAL_INT(foodAmt, snakeLength(snake));
+    freeSnake(&snake);
 
     // Feeding the snake 0 times
     foodAmt = 0;
     snake = NULL;
     for(i = 0;i < foodAmt;i = i + 1) feedSnake(&snake);
     TEST_ASSERT_EQUAL_INT(foodAmt, snakeLength(snake));
-
-    free(snake);
+    freeSnake(&snake);
 }
 
 void test_snake_snake_feedSnake(void) {
@@ -49,7 +49,7 @@ void test_snake_snake_feedSnake(void) {
 
     TEST_ASSERT_EQUAL_INT(0,snakeHead->x);
     TEST_ASSERT_EQUAL_INT(0,snakeHead->y);
-    // TODO freeSnake
+    freeSnake(&snakeHead);
 
 
     /*
@@ -65,7 +65,7 @@ void test_snake_snake_feedSnake(void) {
 
     TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
     TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
-    // TODO freeSnake
+    freeSnake(&snakeHead);
 
 
     // Testing a snake from in a random (x,y) position
@@ -77,6 +77,6 @@ void test_snake_snake_feedSnake(void) {
     
     TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
     TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
-    // TODO freeSnake
+    freeSnake(&snakeHead);
 }
 
