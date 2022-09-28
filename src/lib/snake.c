@@ -1,6 +1,17 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "snake.h"
+
+void freeSnake(struct Snake **snakeHead) {
+    struct Snake *currentNode = NULL;
+
+    while(*snakeHead != NULL){
+        currentNode = *snakeHead;
+        *snakeHead = currentNode->next;
+        free(currentNode);
+    }
+
+    return;
+}
 
 void feedSnake(struct Snake **snakeHead) {
     struct Snake *newNode = malloc(sizeof(struct Snake));
@@ -27,12 +38,12 @@ void feedSnake(struct Snake **snakeHead) {
     return;
 }
 
-int snakeLength(struct Snake *snake) {
+int snakeLength(struct Snake *snakeHead) {
     int count = 0;
 
-    while(snake != NULL){
+    while(snakeHead != NULL){
         count = count + 1;
-        snake = snake->next;
+        snakeHead = snakeHead->next;
     }
 
     return(count);
