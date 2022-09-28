@@ -4,6 +4,16 @@
 #include <snake.h>
 #include <unistd.h>
 
+void test_snake_snake_freeSnake(void) {
+    struct Snake *snakeHead = NULL;
+
+    feedSnake(&snakeHead);
+    freeSnake(&snakeHead);
+    TEST_ASSERT_NULL(snakeHead);
+    
+    return;
+}
+
 void test_snake_snake_snakeLength(void) {
     int i;          // For counter
     int foodAmt;    // The amount of food to feed the snake
@@ -69,3 +79,4 @@ void test_snake_snake_feedSnake(void) {
     TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
     // TODO freeSnake
 }
+

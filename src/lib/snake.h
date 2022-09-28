@@ -7,7 +7,7 @@ struct Snake {
     struct Snake *next;
 };
 
-void freeSnake(struct Snake *snake);
+void freeSnake(struct Snake **snake);
 void feedSnake(struct Snake **snake);
 int snakeLength(struct Snake *snake);
 

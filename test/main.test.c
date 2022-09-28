@@ -13,9 +13,9 @@ int main() {
     RUN_TEST(test_controller_keyboard_calculateDirection);
     
     // TESTING src/snake/snake.c
+    RUN_TEST(test_snake_snake_freeSnake);
     RUN_TEST(test_snake_snake_snakeLength);
     RUN_TEST(test_snake_snake_feedSnake);
-    RUN_TEST(test_snake_snake_freeSnake);
 
     return UNITY_END();
 }

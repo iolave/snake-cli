@@ -2,15 +2,16 @@
 #include <stdio.h>
 #include "snake.h"
 
-void freeSnake(struct Snake *snakeHead) {
-    printf("%p\n", snakeHead);
-    struct Snake *currentNode;
-
-    while(snakeHead != NULL){
-        currentNode = snakeHead;
-        snakeHead = snakeHead->next;
+void freeSnake(struct Snake **snakeHead) {
+    struct Snake *currentNode = NULL;
+    
+    while(*snakeHead != NULL){
+        currentNode = *snakeHead;
+        *snakeHead = currentNode->next;
         free(currentNode);
     }
+
+    return;
 }
 
 void feedSnake(struct Snake **snakeHead) {
