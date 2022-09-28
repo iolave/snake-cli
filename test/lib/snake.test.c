@@ -1,8 +1,5 @@
 #include <unity.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <snake.h>
-#include <unistd.h>
 
 void test_snake_snake_freeSnake(void) {
     struct Snake *snakeHead = NULL;

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <unity.h>
 #include "./controllers/keyboard.test.c"
 #include "./lib/snake.test.c"

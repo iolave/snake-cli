@@ -1,10 +1,9 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "snake.h"
 
 void freeSnake(struct Snake **snakeHead) {
     struct Snake *currentNode = NULL;
-    
+
     while(*snakeHead != NULL){
         currentNode = *snakeHead;
         *snakeHead = currentNode->next;
