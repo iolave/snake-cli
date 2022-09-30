@@ -1,5 +1,6 @@
 #include <unity.h>
 #include <snake.h>
+#include "../generators/snake.c"
 
 void test_snake_snake_freeSnake(void) {
     struct Snake *snakeHead = NULL;
@@ -12,28 +13,26 @@ void test_snake_snake_freeSnake(void) {
 }
 
 void test_snake_snake_snakeLength(void) {
-    int i;          // For counter
     int foodAmt;    // The amount of food to feed the snake
 
     // Creating a snake and the amount of food to feed it
-    struct Snake *snake;
+    struct Snake *snake = NULL;
 
     // Feeding the snake 100 times
     foodAmt = 100;
-    snake = NULL;
-    for(i = 0;i < foodAmt;i = i + 1) feedSnake(&snake);
+    snake = generateMultipleNodesSnake(foodAmt);
     TEST_ASSERT_EQUAL_INT(foodAmt, snakeLength(snake));
     freeSnake(&snake);
 
     // Feeding the snake 0 times
     foodAmt = 0;
-    snake = NULL;
-    for(i = 0;i < foodAmt;i = i + 1) feedSnake(&snake);
+    snake = generateMultipleNodesSnake(foodAmt);
     TEST_ASSERT_EQUAL_INT(foodAmt, snakeLength(snake));
     freeSnake(&snake);
 }
 
 void test_snake_snake_feedSnake(void) {
+    generateMultipleNodesSnake(100);
     struct Snake *snakeHead;
     
     /*
