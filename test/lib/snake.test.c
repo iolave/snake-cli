@@ -32,15 +32,14 @@ void test_snake_snake_snakeLength(void) {
 }
 
 void test_snake_snake_feedSnake(void) {
-    generateMultipleNodesSnake(100);
-    struct Snake *snakeHead;
+    struct Snake *snakeHead = NULL;
     
     /*
      * When feeding the snake for the first time
      * it should set the head node (x,y) postiton 
      * to (0,0).
      */
-    snakeHead = NULL;
+    snakeHead = generateMultipleNodesSnake(0);
     feedSnake(&snakeHead);
 
     TEST_ASSERT_EQUAL_INT(0,snakeHead->x);
@@ -54,21 +53,7 @@ void test_snake_snake_feedSnake(void) {
      * the previous head (x,y) postition
      * position.
      */
-    // Testing a snake from scratch
-    snakeHead = NULL; 
-    feedSnake(&snakeHead);
-    feedSnake(&snakeHead);
-
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
-    freeSnake(&snakeHead);
-
-
-    // Testing a snake from in a random (x,y) position
-    snakeHead = NULL; 
-    feedSnake(&snakeHead);
-    snakeHead->x = 65;
-    snakeHead->y = 32;
+    snakeHead = generateMultipleNodesSnake(23);
     feedSnake(&snakeHead);
     
     TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
