@@ -18,8 +18,8 @@ void feedSnake(struct Snake **snakeHead) {
     struct Snake *currentNode = NULL;
 
     if (*snakeHead == NULL) {
-        newNode->x = 0;
-        newNode->y = 0;
+        newNode->position.x = 0;
+        newNode->position.y = 0;
         newNode->next = *snakeHead;
         *snakeHead = newNode;
         return;
@@ -27,8 +27,8 @@ void feedSnake(struct Snake **snakeHead) {
     
     // Setting new node values
     currentNode = *snakeHead;
-    newNode->x = currentNode->x;
-    newNode->y = currentNode->y;
+    newNode->position.x = currentNode->position.x;
+    newNode->position.y = currentNode->position.y;
     
     // New node points to the rest of the snake
     newNode->next = *snakeHead;
@@ -38,32 +38,31 @@ void feedSnake(struct Snake **snakeHead) {
     return;
 }
 
-#include <stdio.h>
 void moveSnake(struct Snake **snake, struct XYVector vector) {
     struct Snake *newSnake = *snake;
     struct XYVector tmpPosition;
     struct XYVector tmpPosition2;
 
     // Change the head position given a XYVector
-    tmpPosition.x = newSnake->x;
-    tmpPosition.y = newSnake->y;
-    newSnake->x = newSnake->x + vector.x;
-    newSnake->y = newSnake->y + vector.y;
+    tmpPosition.x = newSnake->position.x;
+    tmpPosition.y = newSnake->position.y;
+    newSnake->position.x = newSnake->position.x + vector.x;
+    newSnake->position.y = newSnake->position.y + vector.y;
 
     newSnake = newSnake->next;
     // Single node snake
     if (newSnake == NULL) return;
     // Check if is a fed snake and then return because 
     // there's no need to shift the entire snake
-    if (tmpPosition.x == newSnake->next->x && tmpPosition.y == newSnake->next->y) return;
+    if (tmpPosition.x == newSnake->next->position.x && tmpPosition.y == newSnake->next->position.y) return;
 
     // As the snake has not been fed, shift the rest 
     // of the snake
     while (newSnake != NULL) {
-        tmpPosition2.x = newSnake->x;
-        tmpPosition2.y = newSnake->y;
-        newSnake->x = tmpPosition.x;
-        newSnake->y = tmpPosition.y;
+        tmpPosition2.x = newSnake->position.x;
+        tmpPosition2.y = newSnake->position.y;
+        newSnake->position.x = tmpPosition.x;
+        newSnake->position.y = tmpPosition.y;
         tmpPosition.x = tmpPosition2.x;
         tmpPosition.y = tmpPosition2.y;
         newSnake = newSnake->next;
