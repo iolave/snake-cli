@@ -7,8 +7,6 @@ struct XYVector {
 };
 
 struct Snake {
-    int x;
-    int y;
     struct XYVector position;
     struct Snake *next;
 };
