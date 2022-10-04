@@ -33,8 +33,10 @@ clean:
 
 build:
 	@echo "[BUILD]"
-	@echo "Building ${APP_NAME}..."
 	if [ ! -d ${PATH_OUT} ]; then mkdir ${PATH_OUT}; fi
+	@echo "Building ${APP_NAME} tests..."
+	$(CC) ${CFLAGS} $(CH_INC_TEST) $(CSRC_TEST) -o ${PATH_OUT}/test
+	@echo "Building ${APP_NAME}..."
 	$(CC) $(CFLAGS) $(CH_INC) $(CSRC) -o $(PATH_OUT)/$(APP_NAME)
 	@echo ""
 
@@ -46,5 +48,5 @@ run:
 
 test:
 	@echo "[TEST]"
-	$(CC) ${CFLAGS} $(CH_INC_TEST) $(CSRC_TEST) -o ${PATH_OUT}/test && ${PATH_OUT}/test
+	${PATH_OUT}/test
 	@echo ""
