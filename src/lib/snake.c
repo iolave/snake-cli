@@ -38,6 +38,40 @@ void feedSnake(struct Snake **snakeHead) {
     return;
 }
 
+#include <stdio.h>
+void moveSnake(struct Snake **snake, struct XYVector vector) {
+    struct Snake *newSnake = *snake;
+    struct XYVector tmpPosition;
+    struct XYVector tmpPosition2;
+
+    // Change the head position given a XYVector
+    tmpPosition.x = newSnake->x;
+    tmpPosition.y = newSnake->y;
+    newSnake->x = newSnake->x + vector.x;
+    newSnake->y = newSnake->y + vector.y;
+
+    newSnake = newSnake->next;
+    // Single node snake
+    if (newSnake == NULL) return;
+    // Check if is a fed snake and then return because 
+    // there's no need to shift the entire snake
+    if (tmpPosition.x == newSnake->next->x && tmpPosition.y == newSnake->next->y) return;
+
+    // As the snake has not been fed, shift the rest 
+    // of the snake
+    while (newSnake != NULL) {
+        tmpPosition2.x = newSnake->x;
+        tmpPosition2.y = newSnake->y;
+        newSnake->x = tmpPosition.x;
+        newSnake->y = tmpPosition.y;
+        tmpPosition.x = tmpPosition2.x;
+        tmpPosition.y = tmpPosition2.y;
+        newSnake = newSnake->next;
+    }
+
+    return;
+}
+
 int snakeLength(struct Snake *snakeHead) {
     int count = 0;
 

@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #include <snake.h>
-#include <vector.h>
 #include "controllers/keyboard.c"
 
 // #define GAME_SPEED 100000

@@ -61,3 +61,86 @@ void test_snake_snake_feedSnake(void) {
     freeSnake(&snakeHead);
 }
 
+void test_snake_snake_moveSnake_nonFed(void) {
+    struct Snake *oldSnake = NULL;
+    struct Snake *oldSnakeHead = NULL;
+    struct Snake *snake = NULL;
+    struct Snake *snakeHead = NULL;
+    
+    struct XYVector vector;
+    int foodAmt;
+
+    // Feeding the snake 100 times and moving it
+    foodAmt = 100;
+    vector.x = 0;
+    vector.y = 1;
+    snakeHead = generateMultipleNodesSnake(foodAmt);
+    oldSnakeHead = generateMultipleNodesSnake(foodAmt);
+    moveSnake(&snakeHead, vector);
+    
+    // TODO validation
+    snake = snakeHead;
+    oldSnake = oldSnakeHead;
+
+    // Snake first's node have to match old snake first node 
+    // with the given vector added (x + vector.x, y + vector.y)
+    TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x + vector.x);
+    TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y + vector.y);
+    snake = snake->next;
+
+    // Left snake's nodes have to match the oldSnake's nodes
+    while(snake != NULL) {
+        TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x);
+        TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y);
+        snake = snake->next;
+        oldSnake = oldSnake->next;
+    }
+
+    // Freeing snakes
+    freeSnake(&snake);
+    freeSnake(&oldSnake);
+}
+
+void test_snake_snake_moveSnake_fed(void) {
+    struct Snake *oldSnake = NULL;
+    struct Snake *oldSnakeHead = NULL;
+    struct Snake *snake = NULL;
+    struct Snake *snakeHead = NULL;
+    
+    struct XYVector vector;
+    int foodAmt;
+
+    // Feeding the snake 100 times and moving it
+    foodAmt = 100;
+    vector.x = 0;
+    vector.y = 1;
+    snakeHead = generateMultipleNodesSnake(foodAmt);
+    snakeHead->x = snakeHead->next->x;
+    snakeHead->y = snakeHead->next->y;
+    oldSnakeHead = generateMultipleNodesSnake(foodAmt);
+    oldSnakeHead->x = oldSnakeHead->next->x;
+    oldSnakeHead->y = oldSnakeHead->next->y;
+    moveSnake(&snakeHead, vector);
+    
+    // TODO validation
+    snake = snakeHead;
+    oldSnake = oldSnakeHead;
+
+    // Snake first's node have to match old snake first node 
+    // with the given vector added (x + vector.x, y + vector.y)
+    TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x + vector.x);
+    TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y + vector.y);
+    snake = snake->next;
+
+    // Left snake's nodes have to match the oldSnake's nodes
+    while(snake != NULL) {
+        TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x);
+        TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y);
+        snake = snake->next;
+        oldSnake = oldSnake->next;
+    }
+
+    // Freeing snakes
+    freeSnake(&snake);
+    freeSnake(&oldSnake);
+}
