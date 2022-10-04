@@ -38,7 +38,30 @@ void feedSnake(struct Snake **snakeHead) {
     return;
 }
 
+#include <stdio.h>
 void moveSnake(struct Snake **snake, struct XYVector vector) {
+    struct Snake *newSnake = *snake;
+    struct XYVector tmpPosition;
+    struct XYVector tmpPosition2;
+
+    // Change the head position given a XYVector
+    tmpPosition.x = newSnake->x;
+    tmpPosition.y = newSnake->y;
+    newSnake->x = newSnake->x + vector.x;
+    newSnake->y = newSnake->y + vector.y;
+    newSnake = newSnake->next;
+
+
+    while (newSnake != NULL) {
+        tmpPosition2.x = newSnake->x;
+        tmpPosition2.y = newSnake->y;
+        newSnake->x = tmpPosition.x;
+        newSnake->y = tmpPosition.y;
+        tmpPosition.x = tmpPosition2.x;
+        tmpPosition.y = tmpPosition2.y;
+        newSnake = newSnake->next;
+    }
+
     return;
 }
 
