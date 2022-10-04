@@ -8,8 +8,8 @@ struct Snake * generateSingleNodeSnake(void) {
     feedSnake(&snakeHead);
 
     // Making sure the node position is (0, 0)
-    snakeHead->x = 0;
-    snakeHead->y = 0;
+    snakeHead->position.x = 0;
+    snakeHead->position.y = 0;
     
     return snakeHead;
 }
@@ -25,8 +25,8 @@ struct Snake * generateMultipleNodesSnake(int qty) {
     for (i = 0;i < qty;i = i + 1) {
         // Growing the snake
         feedSnake(&snakeHead);
-        snakeHead->x = i;
-        snakeHead->y = 0;
+        snakeHead->position.x = i;
+        snakeHead->position.y = 0;
     }
 
     return snakeHead;

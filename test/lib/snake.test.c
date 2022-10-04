@@ -42,8 +42,8 @@ void test_snake_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(0);
     feedSnake(&snakeHead);
 
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->x);
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->y);
+    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.x);
+    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.y);
     freeSnake(&snakeHead);
 
 
@@ -56,8 +56,8 @@ void test_snake_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(23);
     feedSnake(&snakeHead);
     
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->x,snakeHead->x);
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->y,snakeHead->y);
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.x,snakeHead->position.x);
+    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.y,snakeHead->position.y);
     freeSnake(&snakeHead);
 }
 
@@ -84,14 +84,14 @@ void test_snake_snake_moveSnake_nonFed(void) {
 
     // Snake first's node have to match old snake first node 
     // with the given vector added (x + vector.x, y + vector.y)
-    TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x + vector.x);
-    TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y + vector.y);
+    TEST_ASSERT_EQUAL_INT(snake->position.x, oldSnake->position.x + vector.x);
+    TEST_ASSERT_EQUAL_INT(snake->position.y, oldSnake->position.y + vector.y);
     snake = snake->next;
 
     // Left snake's nodes have to match the oldSnake's nodes
     while(snake != NULL) {
-        TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x);
-        TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y);
+        TEST_ASSERT_EQUAL_INT(snake->position.x, oldSnake->position.x);
+        TEST_ASSERT_EQUAL_INT(snake->position.y, oldSnake->position.y);
         snake = snake->next;
         oldSnake = oldSnake->next;
     }
@@ -115,11 +115,11 @@ void test_snake_snake_moveSnake_fed(void) {
     vector.x = 0;
     vector.y = 1;
     snakeHead = generateMultipleNodesSnake(foodAmt);
-    snakeHead->x = snakeHead->next->x;
-    snakeHead->y = snakeHead->next->y;
+    snakeHead->position.x = snakeHead->next->position.x;
+    snakeHead->position.y = snakeHead->next->position.y;
     oldSnakeHead = generateMultipleNodesSnake(foodAmt);
-    oldSnakeHead->x = oldSnakeHead->next->x;
-    oldSnakeHead->y = oldSnakeHead->next->y;
+    oldSnakeHead->position.x = oldSnakeHead->next->position.x;
+    oldSnakeHead->position.y = oldSnakeHead->next->position.y;
     moveSnake(&snakeHead, vector);
     
     // TODO validation
@@ -128,14 +128,14 @@ void test_snake_snake_moveSnake_fed(void) {
 
     // Snake first's node have to match old snake first node 
     // with the given vector added (x + vector.x, y + vector.y)
-    TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x + vector.x);
-    TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y + vector.y);
+    TEST_ASSERT_EQUAL_INT(snake->position.x, oldSnake->position.x + vector.x);
+    TEST_ASSERT_EQUAL_INT(snake->position.y, oldSnake->position.y + vector.y);
     snake = snake->next;
 
     // Left snake's nodes have to match the oldSnake's nodes
     while(snake != NULL) {
-        TEST_ASSERT_EQUAL_INT(snake->x, oldSnake->x);
-        TEST_ASSERT_EQUAL_INT(snake->y, oldSnake->y);
+        TEST_ASSERT_EQUAL_INT(snake->position.x, oldSnake->position.x);
+        TEST_ASSERT_EQUAL_INT(snake->position.y, oldSnake->position.y);
         snake = snake->next;
         oldSnake = oldSnake->next;
     }
