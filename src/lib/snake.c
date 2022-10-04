@@ -38,6 +38,10 @@ void feedSnake(struct Snake **snakeHead) {
     return;
 }
 
+void moveSnake(struct Snake **snake, struct XYVector vector) {
+    return;
+}
+
 int snakeLength(struct Snake *snakeHead) {
     int count = 0;
 
