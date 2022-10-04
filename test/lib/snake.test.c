@@ -61,3 +61,14 @@ void test_snake_snake_feedSnake(void) {
     freeSnake(&snakeHead);
 }
 
+void test_snake_snake_moveSnake(void) {
+    struct Snake *snake = NULL;
+    int foodAmt;
+
+    // Feeding the snake 100 times
+    foodAmt = 100;
+    snake = generateMultipleNodesSnake(foodAmt);
+    // TODO validation
+    TEST_ASSERT_NULL(0);
+    freeSnake(&snake);
+}
