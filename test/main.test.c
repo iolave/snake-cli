@@ -12,10 +12,14 @@ int main() {
     RUN_TEST(test_controller_keyboard_calculateDirection);
     
     // TESTING src/snake/snake.c
-    RUN_TEST(test_snake_snake_freeSnake);
-    RUN_TEST(test_snake_snake_snakeLength);
-    RUN_TEST(test_snake_snake_feedSnake);
-    RUN_TEST(test_snake_snake_moveSnake_nonFed);
-    RUN_TEST(test_snake_snake_moveSnake_fed);
+    RUN_TEST(test_lib_snake_freeSnake);
+    RUN_TEST(test_lib_snake_snakeLength);
+    RUN_TEST(test_lib_snake_feedSnake);
+    RUN_TEST(test_lib_snake_moveSnake_nonFed);
+    RUN_TEST(test_lib_snake_moveSnake_fed);
+    RUN_TEST(test_lib_snake_generateXyVector);
+    RUN_TEST(test_lib_snake_addXyVectors);
+    RUN_TEST(test_lib_snake_equalXyVectors);
+    
     return UNITY_END();
 }

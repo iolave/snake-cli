@@ -1,5 +1,27 @@
-#include <stdlib.h>
 #include "snake.h"
+
+struct XYVector generateXyVector(int x, int y) {
+    struct XYVector point;
+    point.x = x;
+    point.y = y;
+
+    return(point);
+}
+
+struct XYVector addXyVectors(struct XYVector vector1, struct XYVector vector2) {
+    struct XYVector newXyVector;
+
+    newXyVector.x = vector1.x + vector2.x;
+    newXyVector.y = vector1.y + vector2.y;
+
+    return newXyVector;
+}
+
+int equalXyVectors(struct XYVector vector1, struct XYVector vector2) {
+    if(vector1.x != vector2.x) return 0;
+    if(vector1.y != vector2.y) return 0;
+    return 1;
+}
 
 void freeSnake(struct Snake **snakeHead) {
     struct Snake *currentNode = NULL;
@@ -18,8 +40,7 @@ void feedSnake(struct Snake **snakeHead) {
     struct Snake *currentNode = NULL;
 
     if (*snakeHead == NULL) {
-        newNode->position.x = 0;
-        newNode->position.y = 0;
+        newNode->position = generateXyVector(0, 0);
         newNode->next = *snakeHead;
         *snakeHead = newNode;
         return;
@@ -27,8 +48,7 @@ void feedSnake(struct Snake **snakeHead) {
     
     // Setting new node values
     currentNode = *snakeHead;
-    newNode->position.x = currentNode->position.x;
-    newNode->position.y = currentNode->position.y;
+    newNode->position = currentNode->position;
     
     // New node points to the rest of the snake
     newNode->next = *snakeHead;
@@ -44,27 +64,22 @@ void moveSnake(struct Snake **snake, struct XYVector vector) {
     struct XYVector tmpPosition2;
 
     // Change the head position given a XYVector
-    tmpPosition.x = newSnake->position.x;
-    tmpPosition.y = newSnake->position.y;
-    newSnake->position.x = newSnake->position.x + vector.x;
-    newSnake->position.y = newSnake->position.y + vector.y;
+    tmpPosition = newSnake->position;
+    newSnake->position = addXyVectors(newSnake->position, vector);
 
     newSnake = newSnake->next;
     // Single node snake
     if (newSnake == NULL) return;
     // Check if is a fed snake and then return because 
     // there's no need to shift the entire snake
-    if (tmpPosition.x == newSnake->next->position.x && tmpPosition.y == newSnake->next->position.y) return;
+    if (equalXyVectors(tmpPosition, newSnake->next->position)) return;
 
     // As the snake has not been fed, shift the rest 
     // of the snake
     while (newSnake != NULL) {
-        tmpPosition2.x = newSnake->position.x;
-        tmpPosition2.y = newSnake->position.y;
-        newSnake->position.x = tmpPosition.x;
-        newSnake->position.y = tmpPosition.y;
-        tmpPosition.x = tmpPosition2.x;
-        tmpPosition.y = tmpPosition2.y;
+        tmpPosition2 = newSnake->position;
+        newSnake->position = tmpPosition;
+        tmpPosition = tmpPosition2;
         newSnake = newSnake->next;
     }
 

@@ -2,7 +2,7 @@
 #include <snake.h>
 #include "../generators/snake.c"
 
-void test_snake_snake_freeSnake(void) {
+void test_lib_snake_freeSnake(void) {
     struct Snake *snakeHead = NULL;
 
     feedSnake(&snakeHead);
@@ -12,7 +12,49 @@ void test_snake_snake_freeSnake(void) {
     return;
 }
 
-void test_snake_snake_snakeLength(void) {
+void test_lib_snake_generateXyVector(void) {
+    struct XYVector point;
+    int expectedX = 34;
+    int expectedY = -167;
+
+    point = generateXyVector(expectedX, expectedY);
+    TEST_ASSERT_EQUAL_INT(expectedX, point.x);
+    TEST_ASSERT_EQUAL_INT(expectedY, point.y);
+
+    return;
+}
+
+void test_lib_snake_addXyVectors(void) {
+    struct XYVector vector;
+    int expectedX = 34;
+    int expectedY = -167;
+
+    vector = addXyVectors(generateXyVector(expectedX,expectedY), generateXyVector(expectedX,expectedY));
+    TEST_ASSERT_EQUAL_INT(expectedX * 2, vector.x);
+    TEST_ASSERT_EQUAL_INT(expectedY * 2, vector.y);
+
+    return;
+}
+
+void test_lib_snake_equalXyVectors(void) {
+    struct XYVector vector1;
+    struct XYVector vector2;
+    int x = 34;
+    int y = -167;
+
+    // Test true case
+    vector1 = generateXyVector(x, y);
+    vector2 = generateXyVector(x, y);
+    TEST_ASSERT_TRUE(equalXyVectors(vector1, vector2));
+    
+    // Test false case
+    vector1 = generateXyVector(x, y);
+    vector2 = generateXyVector(x-1, y-1);
+    TEST_ASSERT_FALSE(equalXyVectors(vector1, vector2));
+    return;
+}
+
+void test_lib_snake_snakeLength(void) {
     int foodAmt;    // The amount of food to feed the snake
 
     // Creating a snake and the amount of food to feed it
@@ -31,7 +73,7 @@ void test_snake_snake_snakeLength(void) {
     freeSnake(&snake);
 }
 
-void test_snake_snake_feedSnake(void) {
+void test_lib_snake_feedSnake(void) {
     struct Snake *snakeHead = NULL;
     
     /*
@@ -42,8 +84,7 @@ void test_snake_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(0);
     feedSnake(&snakeHead);
 
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.x);
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.y);
+    TEST_ASSERT_TRUE(equalXyVectors(generateXyVector(0, 0), snakeHead->position));
     freeSnake(&snakeHead);
 
 
@@ -56,12 +97,11 @@ void test_snake_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(23);
     feedSnake(&snakeHead);
     
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.x,snakeHead->position.x);
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.y,snakeHead->position.y);
+    TEST_ASSERT_TRUE(equalXyVectors(snakeHead->next->position, snakeHead->position));
     freeSnake(&snakeHead);
 }
 
-void test_snake_snake_moveSnake_nonFed(void) {
+void test_lib_snake_moveSnake_nonFed(void) {
     struct Snake *oldSnake = NULL;
     struct Snake *oldSnakeHead = NULL;
     struct Snake *snake = NULL;
@@ -101,7 +141,7 @@ void test_snake_snake_moveSnake_nonFed(void) {
     freeSnake(&oldSnake);
 }
 
-void test_snake_snake_moveSnake_fed(void) {
+void test_lib_snake_moveSnake_fed(void) {
     struct Snake *oldSnake = NULL;
     struct Snake *oldSnakeHead = NULL;
     struct Snake *snake = NULL;
