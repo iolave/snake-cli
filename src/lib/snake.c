@@ -59,10 +59,8 @@ void moveSnake(struct Snake **snake, struct XYVector vector) {
     struct XYVector tmpPosition2;
 
     // Change the head position given a XYVector
-    // TODO
     tmpPosition = newSnake->position;
-    newSnake->position.x = newSnake->position.x + vector.x;
-    newSnake->position.y = newSnake->position.y + vector.y;
+    newSnake->position = addXyVectors(newSnake->position, vector);
 
     newSnake = newSnake->next;
     // Single node snake
