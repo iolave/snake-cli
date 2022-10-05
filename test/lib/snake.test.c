@@ -12,14 +12,26 @@ void test_lib_snake_freeSnake(void) {
     return;
 }
 
-void test_lib_snake_generateXyPoint(void) {
+void test_lib_snake_generateXyVector(void) {
     struct XYVector point;
     int expectedX = 34;
     int expectedY = -167;
 
-    point = generateXyPoint(expectedX, expectedY);
+    point = generateXyVector(expectedX, expectedY);
     TEST_ASSERT_EQUAL_INT(expectedX, point.x);
     TEST_ASSERT_EQUAL_INT(expectedY, point.y);
+
+    return;
+}
+
+void test_lib_snake_addXyVectors(void) {
+    struct XYVector vector;
+    int expectedX = 34;
+    int expectedY = -167;
+
+    vector = addXyVectors(generateXyVector(expectedX,expectedY), generateXyVector(expectedX,expectedY));
+    TEST_ASSERT_EQUAL_INT(expectedX * 2, vector.x);
+    TEST_ASSERT_EQUAL_INT(expectedY * 2, vector.y);
 
     return;
 }

@@ -17,6 +17,8 @@ int main() {
     RUN_TEST(test_lib_snake_feedSnake);
     RUN_TEST(test_lib_snake_moveSnake_nonFed);
     RUN_TEST(test_lib_snake_moveSnake_fed);
-    RUN_TEST(test_lib_snake_generateXyPoint);
+    RUN_TEST(test_lib_snake_generateXyVector);
+    RUN_TEST(test_lib_snake_addXyVectors);
+    
     return UNITY_END();
 }
