@@ -72,7 +72,7 @@ void moveSnake(struct Snake **snake, struct XYVector vector) {
     if (newSnake == NULL) return;
     // Check if is a fed snake and then return because 
     // there's no need to shift the entire snake
-    if (tmpPosition.x == newSnake->next->position.x && tmpPosition.y == newSnake->next->position.y) return;
+    if (equalXyVectors(tmpPosition, newSnake->next->position)) return;
 
     // As the snake has not been fed, shift the rest 
     // of the snake
