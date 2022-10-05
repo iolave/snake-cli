@@ -84,8 +84,7 @@ void test_lib_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(0);
     feedSnake(&snakeHead);
 
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.x);
-    TEST_ASSERT_EQUAL_INT(0,snakeHead->position.y);
+    TEST_ASSERT_TRUE(equalXyVectors(generateXyVector(0, 0), snakeHead->position));
     freeSnake(&snakeHead);
 
 
@@ -98,8 +97,7 @@ void test_lib_snake_feedSnake(void) {
     snakeHead = generateMultipleNodesSnake(23);
     feedSnake(&snakeHead);
     
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.x,snakeHead->position.x);
-    TEST_ASSERT_EQUAL_INT(snakeHead->next->position.y,snakeHead->position.y);
+    TEST_ASSERT_TRUE(equalXyVectors(snakeHead->next->position, snakeHead->position));
     freeSnake(&snakeHead);
 }
 
