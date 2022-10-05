@@ -1,6 +1,14 @@
 #include <stdlib.h>
 #include "snake.h"
 
+struct XYVector generateXyPoint(int x, int y) {
+    struct XYVector point;
+    point.x = x;
+    point.y = y;
+
+    return(point);
+}
+
 void freeSnake(struct Snake **snakeHead) {
     struct Snake *currentNode = NULL;
 

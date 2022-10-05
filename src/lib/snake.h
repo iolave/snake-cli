@@ -11,6 +11,7 @@ struct Snake {
     struct Snake *next;
 };
 
+struct XYVector generateXyPoint(int x, int y);
 void freeSnake(struct Snake **snake);
 void feedSnake(struct Snake **snake);
 void moveSnake(struct Snake **snake, struct XYVector vector);

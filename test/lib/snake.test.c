@@ -2,7 +2,7 @@
 #include <snake.h>
 #include "../generators/snake.c"
 
-void test_snake_snake_freeSnake(void) {
+void test_lib_snake_freeSnake(void) {
     struct Snake *snakeHead = NULL;
 
     feedSnake(&snakeHead);
@@ -12,7 +12,19 @@ void test_snake_snake_freeSnake(void) {
     return;
 }
 
-void test_snake_snake_snakeLength(void) {
+void test_lib_snake_generateXyPoint(void) {
+    struct XYVector point;
+    int expectedX = 34;
+    int expectedY = -167;
+
+    point = generateXyPoint(expectedX, expectedY);
+    TEST_ASSERT_EQUAL_INT(expectedX, point.x);
+    TEST_ASSERT_EQUAL_INT(expectedY, point.y);
+
+    return;
+}
+
+void test_lib_snake_snakeLength(void) {
     int foodAmt;    // The amount of food to feed the snake
 
     // Creating a snake and the amount of food to feed it
@@ -31,7 +43,7 @@ void test_snake_snake_snakeLength(void) {
     freeSnake(&snake);
 }
 
-void test_snake_snake_feedSnake(void) {
+void test_lib_snake_feedSnake(void) {
     struct Snake *snakeHead = NULL;
     
     /*
@@ -61,7 +73,7 @@ void test_snake_snake_feedSnake(void) {
     freeSnake(&snakeHead);
 }
 
-void test_snake_snake_moveSnake_nonFed(void) {
+void test_lib_snake_moveSnake_nonFed(void) {
     struct Snake *oldSnake = NULL;
     struct Snake *oldSnakeHead = NULL;
     struct Snake *snake = NULL;
@@ -101,7 +113,7 @@ void test_snake_snake_moveSnake_nonFed(void) {
     freeSnake(&oldSnake);
 }
 
-void test_snake_snake_moveSnake_fed(void) {
+void test_lib_snake_moveSnake_fed(void) {
     struct Snake *oldSnake = NULL;
     struct Snake *oldSnakeHead = NULL;
     struct Snake *snake = NULL;
