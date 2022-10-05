@@ -1,6 +1,8 @@
 #ifndef SNAKE_H_
 #define SNAKE_H_
 
+#include <stdlib.h>
+
 struct XYVector {
     int x;
     int y;
@@ -13,6 +15,7 @@ struct Snake {
 
 struct XYVector generateXyVector(int x, int y);
 struct XYVector addXyVectors(struct XYVector vector1, struct XYVector vector2);
+int equalXyVectors(struct XYVector vector1, struct XYVector vector2);
 void freeSnake(struct Snake **snake);
 void feedSnake(struct Snake **snake);
 void moveSnake(struct Snake **snake, struct XYVector vector);

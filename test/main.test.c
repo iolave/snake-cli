@@ -19,6 +19,7 @@ int main() {
     RUN_TEST(test_lib_snake_moveSnake_fed);
     RUN_TEST(test_lib_snake_generateXyVector);
     RUN_TEST(test_lib_snake_addXyVectors);
+    RUN_TEST(test_lib_snake_equalXyVectors);
     
     return UNITY_END();
 }

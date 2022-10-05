@@ -36,6 +36,24 @@ void test_lib_snake_addXyVectors(void) {
     return;
 }
 
+void test_lib_snake_equalXyVectors(void) {
+    struct XYVector vector1;
+    struct XYVector vector2;
+    int x = 34;
+    int y = -167;
+
+    // Test true case
+    vector1 = generateXyVector(x, y);
+    vector2 = generateXyVector(x, y);
+    TEST_ASSERT_TRUE(equalXyVectors(vector1, vector2));
+    
+    // Test false case
+    vector1 = generateXyVector(x, y);
+    vector2 = generateXyVector(x-1, y-1);
+    TEST_ASSERT_FALSE(equalXyVectors(vector1, vector2));
+    return;
+}
+
 void test_lib_snake_snakeLength(void) {
     int foodAmt;    // The amount of food to feed the snake
 
