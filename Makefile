@@ -38,7 +38,7 @@ build:
 	$(CC) ${CFLAGS} $(CH_INC_TEST) $(CSRC_TEST) -o ${PATH_OUT}/test
 	@echo ""
 	@echo "Building ${APP_NAME}..."
-	$(CC) $(CFLAGS) $(CH_INC) $(CSRC) -o $(PATH_OUT)/$(APP_NAME)
+	$(CC) $(CFLAGS) ${LDFLAGS} $(CH_INC) $(CSRC) -o $(PATH_OUT)/$(APP_NAME)
 	@echo ""
 
 run:
