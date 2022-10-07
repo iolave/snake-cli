@@ -8,33 +8,8 @@
 #include <snake.h>
 #include "controllers/keyboard.c"
 
-// #define GAME_SPEED 100000
-// #define GAME_UP 'w'
-// #define GAME_DOWN 's'
-// #define GAME_LEFT 'd'
-// #define GAME_RIGHT 'a'
-
-// struct Snake {
-//     int x;
-//     int y;
-//     struct Snake *next;
-// };
-
-// void feedSnake(struct Snake **snake) {
-//     // Creating a new snake node
-//     struct Snake *node = malloc(sizeof(struct Snake));
-    
-//     // Setting new node values
-//     node->x = 0;
-//     node->y = 0;
-    
-//     // New node points to the rest of the snake
-//     node->next = *snake;
-
-//     // The new node plus the given snake becomes the new snake
-//     *snake = node;
-// }
-
+// TODO remove or move to another file
+#define GAME_SPEED 100000
 int main() {
     struct Snake *snake = NULL;
 
