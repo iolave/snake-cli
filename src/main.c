@@ -11,14 +11,19 @@
 // TODO remove or move to another file
 #define GAME_SPEED 100000
 int main() {
-    struct Snake *snake = NULL;
+    struct Snake *snakeHead = NULL;
+    struct Snake *snakePtr = NULL;
+    int ch;
+    struct XYVector direction;
+    struct XYVector directionTmp;
 
-    feedSnake(&snake);
-    printf("%d\n", snakeLength(snake));
+    /* Game initialization */
+    // Adding snake's first node
+    feedSnake(&snakeHead);
+    // Default direction vector (0, 0)
+    direction = calculateDirection(-1);
 
-    free(snake);
-    return 0;
-
+    /* Game UI initizaliation */
     initscr();
     nodelay(stdscr, TRUE);
     cbreak();
@@ -26,20 +31,43 @@ int main() {
     curs_set(0);
     keypad(stdscr, TRUE);
 
-    int ch;
-
+    /* Game loop */
     do {
         ch = getch();
-        printw("(%d, %d)\n", calculateDirection(ch).x, calculateDirection(ch).y);
+
+        // Condition to end the loop(?)
         if(calculateDirection(ch).y == 1) {
             endwin();
             return(1);
         }
+
+        // If a key has been pressed, calculate a direction
+        if (ch != -1) {
+            directionTmp = calculateDirection(ch);
+            if (!equalXyVectors(directionTmp, generateXyVector(0,0))) direction = directionTmp;
+        }
+
+        snakePtr = snakeHead;
+
+        while(snakePtr != NULL) {
+            printw("(%d, %d)", snakePtr->position.x, snakePtr->position.y);
+            snakePtr = snakePtr->next;
+        }
+        printw("\n");
+        moveSnake(&snakeHead, direction);
+
+        // printw("(%d, %d) %d\n", direction.x, direction.y, ch);
         refresh();
         sleep(1);
     } while(true);
 
- 
+    // Free snake's linked list when finished
+    freeSnake(&snakeHead);
+    return 0;
+
+
+//755-807
+
 
     // static const char quitMsg[] = "Press Q to Quit";
     // static const char startMsg[] = "Press any key to start";
