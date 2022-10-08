@@ -55,21 +55,6 @@ int main() {
             freeSnake(&snakeHead);
             return 0;
         }
-
-        
-        // ch = getch();
-
-        // Condition to end the loop(?)
-        // if(calculateDirection(ch).y == 1) {
-        //     printw("feed\n");
-        //     moveSnake(&snakeHead, direction);
-        //     refresh();
-        //     sleep(5);
-        //     endwin();
-        //     // Free snake's linked list when finished
-        //     freeSnake(&snakeHead);
-        //     return(0);
-        // }
         
         // If a key has been pressed, calculate a direction
         ch = getch();
@@ -80,7 +65,6 @@ int main() {
                 feedSnake(&snakeHead);
             }
         }
-        
     
         snakePtr = snakeHead;
         while(snakePtr != NULL) {
@@ -91,48 +75,24 @@ int main() {
             // mvprintw(currentPos.y, currentPos.x, "*");
             snakePtr = snakePtr->next;
             refresh();
-            
-
         }
         usleep(20000);
         printw("\n");
         refresh();
 
         moveSnake(&snakeHead, direction);
-
-       
-        // usleep(50000);
     } while(true);
-
-    
     return 0;
-
-
-//755-807
-
-
-    // static const char quitMsg[] = "Press Q to Quit";
-    // static const char startMsg[] = "Press any key to start";
-
-    // mvaddstr(maxPos.y-1, (maxPos.x-strlen(startMsg))/2, startMsg);
-    // mvaddstr(maxPos.y-1, (maxPos.x-strlen(quitMsg))/2, quitMsg);
-
-
-
-
-
-
-
-    // //     /* and msg centered at the bottom. */
-    // //     mvaddstr(maxPos.y-1, (maxPos.x-strlen(msg))/2, msg);
-
-    // // } while (c != 'Q' && c != 'q');
-
-
-
-
-
-
-
 }
 
+
+// static const char quitMsg[] = "Press Q to Quit";
+// static const char startMsg[] = "Press any key to start";
+
+// mvaddstr(maxPos.y-1, (maxPos.x-strlen(startMsg))/2, startMsg);
+// mvaddstr(maxPos.y-1, (maxPos.x-strlen(quitMsg))/2, quitMsg);
+
+// //     /* and msg centered at the bottom. */
+// //     mvaddstr(maxPos.y-1, (maxPos.x-strlen(msg))/2, msg);
+
+// // } while (c != 'Q' && c != 'q');
