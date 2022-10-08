@@ -67,15 +67,15 @@ void moveSnake(struct Snake **snake, struct XYVector vector) {
     tmpPosition = newSnake->position;
     newSnake->position = addXyVectors(newSnake->position, vector);
 
-    newSnake = newSnake->next;
     // Single node snake
-    if (newSnake == NULL) return;
+    if (newSnake->next == NULL) return;
     // Check if is a fed snake and then return because 
     // there's no need to shift the entire snake
-    if (equalXyVectors(tmpPosition, newSnake->next->position)) return;
+    if (equalXyVectors(newSnake->position, newSnake->next->position)) return;
 
     // As the snake has not been fed, shift the rest 
     // of the snake
+    newSnake = newSnake->next;
     while (newSnake != NULL) {
         tmpPosition2 = newSnake->position;
         newSnake->position = tmpPosition;
