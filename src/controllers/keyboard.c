@@ -1,4 +1,4 @@
-#include <snake.h>
+#include "../lib/vector.h"
 
 #define CONTROLLER_UP 259
 #define CONTROLLER_DOWN 258
