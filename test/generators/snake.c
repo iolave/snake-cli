@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <snake.h>
-
+#include "../../src/lib/snake.h"
 
 struct Snake * generateSingleNodeSnake(void) {
     struct Snake *snakeHead = NULL;

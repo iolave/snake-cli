@@ -1,5 +1,5 @@
 #include <unity.h>
-#include <snake.h>
+#include "../../src/lib/snake.h"
 #include "../generators/snake.c"
 
 void test_lib_snake_freeSnake(void) {

@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include <snake.h>
+#include "lib/snake.h"
 #include "controllers/keyboard.c"
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
