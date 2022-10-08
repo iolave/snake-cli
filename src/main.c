@@ -9,6 +9,8 @@
 #include "game/validations.c"
 #include "controllers/keyboard.c"
 
+#define BOX_CHAR 'U+1'
+
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
     struct XYVector normalizedPoint;
 
@@ -68,7 +70,9 @@ int main() {
             
             currentPos = normalizePlanePoint(snakePtr->position, gameBoundaries);
             // printw("(%d, %d)", currentPos.x, currentPos.y);
-            mvaddch(currentPos.y, currentPos.x, '*');
+            mvaddch(currentPos.y, currentPos.x, BOX_CHAR);
+            mvaddch(currentPos.y, currentPos.x-1, BOX_CHAR);
+
             // mvprintw(currentPos.y, currentPos.x, "*");
             snakePtr = snakePtr->next;
             refresh();
