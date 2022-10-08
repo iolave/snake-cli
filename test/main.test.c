@@ -1,6 +1,8 @@
 #include <unity.h>
-#include "./controllers/keyboard.test.c"
+#include "./lib/vector.test.c"
 #include "./lib/snake.test.c"
+#include "./game/validations.test.c"
+#include "./controllers/keyboard.test.c"
 
 void setUp() {}
 void tearDown() {}
@@ -8,18 +10,24 @@ void tearDown() {}
 int main() {
     UNITY_BEGIN();
     
-    // TESTING src/controller/keyboard.c
-    RUN_TEST(test_controller_keyboard_calculateDirection);
-    
-    // TESTING src/snake/snake.c
+    // TESTING src/lib/vector.c
+    RUN_TEST(test_lib_vector_generateXyVector);
+    RUN_TEST(test_lib_vector_addXyVectors);
+    RUN_TEST(test_lib_vector_equalXyVectors);
+
+    // TESTING src/lib/snake.c
     RUN_TEST(test_lib_snake_freeSnake);
     RUN_TEST(test_lib_snake_snakeLength);
     RUN_TEST(test_lib_snake_feedSnake);
     RUN_TEST(test_lib_snake_moveSnake_nonFed);
     RUN_TEST(test_lib_snake_moveSnake_fed);
-    RUN_TEST(test_lib_snake_generateXyVector);
-    RUN_TEST(test_lib_snake_addXyVectors);
-    RUN_TEST(test_lib_snake_equalXyVectors);
+
+    // TESTING src/controller/keyboard.c
+    RUN_TEST(test_controller_keyboard_calculateDirection);
     
+    // TESTING src/game/validations.c
+    RUN_TEST(test_game_validations_validateNodePosition_outbound);
+    RUN_TEST(test_game_validations_validateNodePosition_inbound);
+
     return UNITY_END();
 }
