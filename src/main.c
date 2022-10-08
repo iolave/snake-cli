@@ -42,8 +42,6 @@ int main() {
     curs_set(0);
     keypad(stdscr, TRUE);
 
-
-
     /* Game loop */
     do {
         erase();
