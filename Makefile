@@ -2,7 +2,7 @@ APP_NAME=snake-cli
 PATH_OUT=build
 
 CC=clang
-CFLAGS=-Wall
+CFLAGS=-Wall -Wno-multichar
 LDFLAGS=-lcurses
 CH_INC=-I src/lib/
 CSRC=src/lib/*.c src/main.c
