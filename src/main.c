@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "lib/snake.h"
+#include "game/validations.c"
 #include "controllers/keyboard.c"
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
@@ -25,6 +26,8 @@ int main() {
     struct XYVector direction;
     struct XYVector directionTmp;
     struct XYVector currentPos;
+    struct XYVector gameBoundaries;
+    struct XYVector snakeHeadPosNorm;
     int ch;
 
     static const char quitMsg[] = "Press Q to Quit";
@@ -45,14 +48,10 @@ int main() {
     /* Game loop */
     do {
         erase();
-        mvaddstr(LINES-1, (COLS-strlen(quitMsg))/2, quitMsg);
 
-        if(snakeLength(snakeHead) == 10) {
-            sleep(3);
-            endwin();
-            freeSnake(&snakeHead);
-            return 0;
-        }
+        gameBoundaries = generateXyVector(COLS, LINES);
+
+        mvaddstr(LINES-1, (COLS-strlen(quitMsg))/2, quitMsg);
         
         // If a key has been pressed, calculate a direction
         ch = getch();
@@ -67,7 +66,7 @@ int main() {
         snakePtr = snakeHead;
         while(snakePtr != NULL) {
             
-            currentPos = normalizePlanePoint(snakePtr->position, generateXyVector(COLS, LINES));
+            currentPos = normalizePlanePoint(snakePtr->position, gameBoundaries);
             // printw("(%d, %d)", currentPos.x, currentPos.y);
             mvaddch(currentPos.y, currentPos.x, '*');
             // mvprintw(currentPos.y, currentPos.x, "*");
@@ -79,6 +78,12 @@ int main() {
         refresh();
 
         moveSnake(&snakeHead, direction);
+        snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
+        if(!validateNodePosition(snakeHeadPosNorm, gameBoundaries)) {
+            endwin();
+            freeSnake(&snakeHead);
+            return 0;
+        }
     } while(true);
     return 0;
 }
