@@ -28,6 +28,7 @@ int main() {
     // TESTING src/game/validations.c
     RUN_TEST(test_game_validations_validateNodePosition_outbound);
     RUN_TEST(test_game_validations_validateNodePosition_inbound);
+    RUN_TEST(test_game_validations_checkOppositeDirectionVectors_true);
 
     return UNITY_END();
 }

@@ -22,11 +22,25 @@ void test_game_validations_validateNodePosition_outbound(void) {
 }
 
 void test_game_validations_validateNodePosition_inbound(void) {
-struct XYVector boundaries = generateXyVector(10, 10);
+    struct XYVector boundaries = generateXyVector(10, 10);
     struct XYVector nodePosition = generateXyVector(4, 0);
 
     nodePosition = normalizePlanePoint(nodePosition, boundaries);
 
     TEST_ASSERT_TRUE(validateNodePosition(nodePosition, boundaries));
+    return;
+}
+
+void test_game_validations_checkOppositeDirectionVectors_true(void) {
+    struct XYVector newVector; 
+    struct XYVector currentVector;
+
+    newVector = generateXyVector(1, 0);
+    currentVector = generateXyVector(-1, 0);
+    TEST_ASSERT_TRUE(checkOppositeDirectionVectors(newVector, currentVector));
+
+    newVector = generateXyVector(0, 1);
+    currentVector = generateXyVector(0, -1);
+    TEST_ASSERT_TRUE(checkOppositeDirectionVectors(newVector, currentVector));
     return;
 }
