@@ -27,7 +27,9 @@ int validateNodePosition(struct XYVector normPos, struct XYVector boundaries) {
  */
 int checkOppositeDirectionVectors(struct XYVector newVector, struct XYVector currentVector) {
     if (newVector.x > 0 && currentVector.x < 0) return 1;
+    if (newVector.x < 0 && currentVector.x > 0) return 1;
     if (newVector.y > 0 && currentVector.y < 0) return 1;
+    if (newVector.y < 0 && currentVector.y > 0) return 1;
 
     return 0;
 }
