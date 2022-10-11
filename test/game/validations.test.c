@@ -52,3 +52,17 @@ void test_game_validations_checkOppositeDirectionVectors_true(void) {
     TEST_ASSERT_TRUE(checkOppositeDirectionVectors(newVector, currentVector));
     return;
 }
+
+void test_game_validations_checkOppositeDirectionVectors_false(void) {
+    struct XYVector newVector; 
+    struct XYVector currentVector;
+
+    newVector = generateXyVector(1, 0);
+    currentVector = generateXyVector(1, 0);
+    TEST_ASSERT_FALSE(checkOppositeDirectionVectors(newVector, currentVector));
+
+    newVector = generateXyVector(0, 1);
+    currentVector = generateXyVector(0, 1);
+    TEST_ASSERT_FALSE(checkOppositeDirectionVectors(newVector, currentVector));
+    return;
+}
