@@ -87,8 +87,10 @@ void doGame(void) {
         if (ch != -1) {
             directionTmp = calculateDirection(ch);
             if (!equalXyVectors(directionTmp, generateXyVector(0,0))) {
-                direction = directionTmp;
-                feedSnake(&snakeHead);
+                if(!checkOppositeDirectionVectors(directionTmp, direction)) {
+                    direction = directionTmp;
+                    feedSnake(&snakeHead);
+                }
             }
         }
     
