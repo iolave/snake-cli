@@ -1,5 +1,5 @@
 #include <unity.h>
-#include "../../src/lib/vector.h"
+#include "../../src/lib/snake.h"
 #include "../../src/game/validations.c"
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
@@ -64,5 +64,22 @@ void test_game_validations_checkOppositeDirectionVectors_false(void) {
     newVector = generateXyVector(0, 1);
     currentVector = generateXyVector(0, 1);
     TEST_ASSERT_FALSE(checkOppositeDirectionVectors(newVector, currentVector));
+    return;
+}
+
+void test_game_validations_checkOverlappingSnake_true(void) {
+    struct Snake *snakeHead = generateMultipleNodesSnake(100);
+    snakeHead->position = generateXyVector(0, 0);
+
+    TEST_ASSERT_TRUE(checkOverlappingSnake(snakeHead));
+    return;
+}
+
+void test_game_validations_checkOverlappingSnake_false(void) {
+    struct Snake *snakeHead = generateMultipleNodesSnake(100);
+    snakeHead->position = generateXyVector(-9999, -9999);
+
+    TEST_ASSERT_FALSE(checkOverlappingSnake(snakeHead));
+    freeSnake(&snakeHead);
     return;
 }

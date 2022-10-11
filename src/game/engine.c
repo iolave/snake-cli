@@ -112,6 +112,11 @@ void doGame(void) {
         
 
         moveSnake(&snakeHead, direction);
+        if(checkOverlappingSnake(snakeHead)) {
+            gameDestroy();
+            freeSnake(&snakeHead);
+            exit(EXIT_SUCCESS);
+        }
         snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
         if(!validateNodePosition(snakeHeadPosNorm, gameBoundaries)) {
             gameDestroy();
