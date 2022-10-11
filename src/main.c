@@ -1,40 +1,11 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <curses.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdlib.h>
-
-// #include "lib/snake.h"
-// #include "game/validations.c"
-// #include "controllers/keyboard.c"
 #include "game/engine.c"
 
-#define BOX_CHAR 'U+1'
-
-struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
-    struct XYVector normalizedPoint;
-
-    normalizedPoint.x = (screenDims.x / 2) + point.x;
-    normalizedPoint.y = (screenDims.y / 2) + (point.y * -1);
-
-    return normalizedPoint;
-}
-
 // TODO remove or move to another file
-#define GAME_SPEED 100000
 int main() {
 
     doGame();
 
     return 0;
-    // struct Snake *snakeHead = NULL;
-    // struct Snake *snakePtr = NULL;
-    // struct XYVector direction;
-    // struct XYVector directionTmp;
-    // struct XYVector currentPos;
-    // struct XYVector gameBoundaries;
-    // struct XYVector snakeHeadPosNorm;
     // int ch;
 
     // static const char quitMsg[] = "Press Q to Quit";
