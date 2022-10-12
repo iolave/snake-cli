@@ -64,11 +64,14 @@ void doGame(void) {
     struct XYVector gameBoundaries;
     struct XYVector snakeHeadPosNorm;
     struct XYVector snakeTailPosNorm;
+    struct XYVector prevSnakeTailPos;
+    int snakeLen;
+
     struct Snake *snakeTail = NULL;
     static const char quitMsg[] = "Press Q to Quit";
 
     gameSetup();
-    gameSpeed = 20000;
+    gameSpeed = 300000;
 
     /* Game initialization */
     // Adding snake's first node
@@ -76,11 +79,27 @@ void doGame(void) {
     // Default direction vector (0, 0)
     direction = calculateDirection(-1);
     snakeTail = snakeHead;
-
+    
+    gameBoundaries = generateXyVector(COLS, LINES-1);
+    mvaddstr(gameBoundaries.y, (gameBoundaries.x-strlen(quitMsg))/2, quitMsg);
 
     do {
-        gameBoundaries = generateXyVector(COLS, LINES);
-        mvaddstr(gameBoundaries.y-1, (gameBoundaries.x-strlen(quitMsg))/2, quitMsg);
+        snakeLen = snakeLength(snakeHead);
+
+
+
+        mvprintw(0, 0, "");
+        mvprintw(0, 0, "length: %d", snakeLength(snakeHead));
+        mvprintw(1, 0, "");
+        mvprintw(1, 0, "current_snake_tail_pos: (%d, %d)               ", snakeTail->position.x, snakeTail->position.y);
+        mvprintw(2, 0, "");
+        mvprintw(2, 0, "previous_snake_tail_pos: (%d, %d)              ", prevSnakeTailPos.x, prevSnakeTailPos.y);
+        mvprintw(3, 0, "");
+        mvprintw(3, 0, "is_overlapping_snake: %d                       ", isOverlappingSnake(snakeHead));
+
+
+
+
         // If a key has been pressed, calculate a direction
         ch = getch();
 
@@ -89,7 +108,6 @@ void doGame(void) {
             if (!equalXyVectors(directionTmp, generateXyVector(0,0))) {
                 if(!checkOppositeDirectionVectors(directionTmp, direction)) {
                     direction = directionTmp;
-                    feedSnake(&snakeHead);
                 }
             }
         }
@@ -100,20 +118,29 @@ void doGame(void) {
             currentPos = normalizePlanePoint(snakePtr->position, gameBoundaries);
             mvaddch(currentPos.y, currentPos.x, CH_SNAKE);
             mvaddch(currentPos.y, currentPos.x-1, CH_SNAKE);
-            if(snakePtr->next == NULL) {
-                mvaddch(currentPos.y, currentPos.x, ' ');
-                mvaddch(currentPos.y, currentPos.x-1, ' ');
-            }
             snakePtr = snakePtr->next;
+        }
+
+        if(snakeLength(snakeHead) != 1) {
+            currentPos = normalizePlanePoint(prevSnakeTailPos, gameBoundaries);
+            mvprintw(currentPos.y, currentPos.x-1, "  ");
         }
         usleep(gameSpeed);
         refresh();
 
-        
+        prevSnakeTailPos = snakeTail->position;
 
+        if(isOverlappingSnake(snakeHead)) {
+            gameDestroy();
+            freeSnake(&snakeHead);
+            exit(EXIT_SUCCESS);
+        }  
+
+        if (ch != -1) feedSnake(&snakeHead);
         moveSnake(&snakeHead, direction);
+
         snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
-        if(!validateNodePosition(snakeHeadPosNorm, gameBoundaries)) {
+        if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
             gameDestroy();
             freeSnake(&snakeHead);
             exit(EXIT_SUCCESS);
@@ -122,6 +149,6 @@ void doGame(void) {
     } while (toupper(ch) != CH_QUIT);
 
     gameDestroy();
-
+    freeSnake(&snakeHead);
     exit(EXIT_SUCCESS);
 }
