@@ -30,8 +30,8 @@ int main() {
     RUN_TEST(test_game_validations_validateNodePosition_inbound);
     RUN_TEST(test_game_validations_checkOppositeDirectionVectors_true);
     RUN_TEST(test_game_validations_checkOppositeDirectionVectors_false);
-    RUN_TEST(test_game_validations_checkOverlappingSnake_true);
-    RUN_TEST(test_game_validations_checkOverlappingSnake_false);
+    RUN_TEST(test_game_validations_isOverlappingSnake_true);
+    RUN_TEST(test_game_validations_isOverlappingSnake_false);
 
     return UNITY_END();
 }

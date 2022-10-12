@@ -67,19 +67,28 @@ void test_game_validations_checkOppositeDirectionVectors_false(void) {
     return;
 }
 
-void test_game_validations_checkOverlappingSnake_true(void) {
+void test_game_validations_isOverlappingSnake_true(void) {
     struct Snake *snakeHead = generateMultipleNodesSnake(100);
     snakeHead->position = generateXyVector(0, 0);
 
-    TEST_ASSERT_TRUE(checkOverlappingSnake(snakeHead));
+    TEST_ASSERT_TRUE(isOverlappingSnake(snakeHead));
     return;
 }
 
-void test_game_validations_checkOverlappingSnake_false(void) {
-    struct Snake *snakeHead = generateMultipleNodesSnake(100);
+void test_game_validations_isOverlappingSnake_false(void) {
+    struct Snake *snakeHead = NULL; 
+    
+    snakeHead = generateMultipleNodesSnake(100);
     snakeHead->position = generateXyVector(-9999, -9999);
 
-    TEST_ASSERT_FALSE(checkOverlappingSnake(snakeHead));
+    TEST_ASSERT_FALSE(isOverlappingSnake(snakeHead));
+    
+    snakeHead = generateMultipleNodesSnake(1);
+    TEST_ASSERT_FALSE(isOverlappingSnake(snakeHead));
+
+    snakeHead = generateMultipleNodesSnake(2);
+    TEST_ASSERT_FALSE(isOverlappingSnake(snakeHead));
+
     freeSnake(&snakeHead);
     return;
 }

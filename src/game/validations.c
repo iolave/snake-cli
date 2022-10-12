@@ -45,10 +45,12 @@ int checkOppositeDirectionVectors(struct XYVector newVector, struct XYVector cur
  * 
  * @returns 0 (false) or 1 (true)
  */
-int checkOverlappingSnake(struct Snake *snakeHead) {
+int isOverlappingSnake(struct Snake *snakeHead) {
     struct Snake *snakePtr = snakeHead;
 
     snakePtr = snakePtr->next;
+    if(snakeLength(snakeHead) <= 1) return 0; 
+
     while(snakePtr != NULL) {
         if(equalXyVectors(snakePtr->position, snakeHead->position)) return 1;
         snakePtr = snakePtr->next;
