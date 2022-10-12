@@ -5,11 +5,11 @@
  * game boundaries.
  * 
  * @param normPos Normalized node position.
- * @param boundaries Game screen boundaries.
+ * @param boundaries Curses library screen boundaries (COLS, LINES).
  * 
  * @returns 0 (false) or 1 (true)
 */
-int validateNodePosition(struct XYVector normPos, struct XYVector boundaries) {
+int isSnakeWithingBoundaries(struct XYVector normPos, struct XYVector boundaries) {
     if (normPos.x >= boundaries.x) return 0;
     if (normPos.y >= boundaries.y) return 0;
     if (normPos.x <= 0) return 0;

@@ -140,7 +140,7 @@ void doGame(void) {
         moveSnake(&snakeHead, direction);
 
         snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
-        if(!validateNodePosition(snakeHeadPosNorm, gameBoundaries)) {
+        if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
             gameDestroy();
             freeSnake(&snakeHead);
             exit(EXIT_SUCCESS);
