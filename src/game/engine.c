@@ -63,7 +63,6 @@ void doGame(void) {
     struct XYVector currentPos;
     struct XYVector gameBoundaries;
     struct XYVector snakeHeadPosNorm;
-    struct XYVector snakeTailPosNorm;
     struct XYVector prevSnakeTailPos;
     int snakeLen;
 
@@ -89,7 +88,7 @@ void doGame(void) {
 
 
         mvprintw(0, 0, "");
-        mvprintw(0, 0, "length: %d", snakeLength(snakeHead));
+        mvprintw(0, 0, "length: %d", snakeLen);
         mvprintw(1, 0, "");
         mvprintw(1, 0, "current_snake_tail_pos: (%d, %d)               ", snakeTail->position.x, snakeTail->position.y);
         mvprintw(2, 0, "");
