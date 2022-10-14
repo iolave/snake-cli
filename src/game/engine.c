@@ -15,9 +15,9 @@
 void cursesSignalHandler(int sig);
 void cursesSetup(void);
 void cursesDestroy(void);
-void cursesScreenManagement(void);
+int cursesScreenManagement(void);
 int cursesScreenMain(void);
-void doGame(void);
+int cursesScreenPlay(void);
 
 void cursesSignalHandler(int sig) {
     if (sig == SIGINT) {
@@ -47,13 +47,21 @@ void cursesDestroy(void) {
     endwin();
 }
 
-void cursesScreenManagement(void) {
-    int returnCodeScreenMain;
+int cursesScreenManagement(void) {
+    int returnCodeScreenMain = -1;
+    int returnCodeScreenPlay = -1;
 
     returnCodeScreenMain = cursesScreenMain();
-    if (returnCodeScreenMain == 1) doGame(); 
+    
+    if (returnCodeScreenMain != EXIT_SUCCESS) return EXIT_FAILURE;
+    if (returnCodeScreenMain == EXIT_SUCCESS) {
+        returnCodeScreenPlay = cursesScreenPlay();
+    }
 
-    return;
+    if(returnCodeScreenPlay == EXIT_SUCCESS) return EXIT_SUCCESS;
+    if(returnCodeScreenPlay == EXIT_FAILURE) return EXIT_FAILURE;
+
+    return EXIT_FAILURE;
 }
 
 int cursesScreenMain(void) {
@@ -71,7 +79,7 @@ int cursesScreenMain(void) {
 
 
     cursesDestroy();
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
@@ -83,7 +91,7 @@ struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector scree
     return normalizedPoint;
 }
 
-void doGame(void) {
+int cursesScreenPlay(void) {
     useconds_t gameSpeed;
     int ch;
     struct Snake *snakeHead = NULL;
@@ -162,7 +170,7 @@ void doGame(void) {
         if(isOverlappingSnake(snakeHead)) {
             cursesDestroy();
             freeSnake(&snakeHead);
-            exit(EXIT_SUCCESS);
+            return EXIT_FAILURE;
         }  
 
         if (ch != -1) feedSnake(&snakeHead);
@@ -172,12 +180,12 @@ void doGame(void) {
         if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
             cursesDestroy();
             freeSnake(&snakeHead);
-            exit(EXIT_SUCCESS);
+            return EXIT_SUCCESS;
         }
         
     } while (toupper(ch) != CH_QUIT);
 
     cursesDestroy();
     freeSnake(&snakeHead);
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
