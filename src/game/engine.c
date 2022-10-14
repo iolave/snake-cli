@@ -15,6 +15,7 @@
 void cursesSignalHandler(int sig);
 void cursesSetup(void);
 void cursesDestroy(void);
+int cursesScreenMain(void);
 void doGame(void);
 
 void cursesSignalHandler(int sig) {
@@ -42,6 +43,24 @@ void cursesSetup(void) {
 
 void cursesDestroy(void) {
     endwin();
+}
+
+int cursesScreenMain(void) {
+    static const char msgStart[] = "Press any key to start...";
+    struct XYVector cursesScreenSize;
+    int ch;
+
+    cursesSetup();
+    cursesScreenSize = generateXyVector(COLS, LINES);
+
+    do {
+        ch = getch();
+        mvprintw(cursesScreenSize.y/2, (cursesScreenSize.x/2) - strlen(msgStart)/2, "%s", msgStart);
+    } while(ch == -1);
+
+
+    cursesDestroy();
+    return 0;
 }
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {

@@ -2,7 +2,7 @@
 
 int main() {
 
-    doGame();
+    cursesScreenMain();
 
     return 0;
 }
