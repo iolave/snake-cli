@@ -12,22 +12,22 @@
 #define CH_SNAKE 'U+1'
 #define CH_QUIT 81
 
-void gameSignalHandler(int sig);
-void gameSetup(void);
-void gameDestroy(void);
+void cursesSignalHandler(int sig);
+void cursesSetup(void);
+void cursesDestroy(void);
 void doGame(void);
 
-void gameSignalHandler(int sig) {
+void cursesSignalHandler(int sig) {
     if (sig == SIGINT) {
-        gameDestroy();
+        cursesDestroy();
         exit(sig);
     }
 }
 
-void gameSetup(void) {
+void cursesSetup(void) {
     struct sigaction act;
 
-    act.sa_handler = gameSignalHandler;
+    act.sa_handler = cursesSignalHandler;
     sigaction(SIGINT, &act, NULL);
 
     initscr();
@@ -40,7 +40,7 @@ void gameSetup(void) {
     return;
 }
 
-void gameDestroy(void) {
+void cursesDestroy(void) {
     endwin();
 }
 
@@ -69,7 +69,7 @@ void doGame(void) {
     struct Snake *snakeTail = NULL;
     static const char quitMsg[] = "Press Q to Quit";
 
-    gameSetup();
+    cursesSetup();
     gameSpeed = 300000;
 
     /* Game initialization */
@@ -130,7 +130,7 @@ void doGame(void) {
         prevSnakeTailPos = snakeTail->position;
 
         if(isOverlappingSnake(snakeHead)) {
-            gameDestroy();
+            cursesDestroy();
             freeSnake(&snakeHead);
             exit(EXIT_SUCCESS);
         }  
@@ -140,14 +140,14 @@ void doGame(void) {
 
         snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
         if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
-            gameDestroy();
+            cursesDestroy();
             freeSnake(&snakeHead);
             exit(EXIT_SUCCESS);
         }
         
     } while (toupper(ch) != CH_QUIT);
 
-    gameDestroy();
+    cursesDestroy();
     freeSnake(&snakeHead);
     exit(EXIT_SUCCESS);
 }
