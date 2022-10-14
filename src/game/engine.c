@@ -15,6 +15,7 @@
 void cursesSignalHandler(int sig);
 void cursesSetup(void);
 void cursesDestroy(void);
+void cursesScreenManagement(void);
 int cursesScreenMain(void);
 void doGame(void);
 
@@ -45,6 +46,15 @@ void cursesDestroy(void) {
     endwin();
 }
 
+void cursesScreenManagement(void) {
+    int returnCodeScreenMain;
+
+    returnCodeScreenMain = cursesScreenMain();
+    if (returnCodeScreenMain == 1) doGame(); 
+
+    return;
+}
+
 int cursesScreenMain(void) {
     static const char msgStart[] = "Press any key to start...";
     struct XYVector cursesScreenSize;
@@ -60,7 +70,7 @@ int cursesScreenMain(void) {
 
 
     cursesDestroy();
-    return 0;
+    return 1;
 }
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {

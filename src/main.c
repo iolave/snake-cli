@@ -2,7 +2,7 @@
 
 int main() {
 
-    cursesScreenMain();
+    cursesScreenManagement();
 
     return 0;
 }
