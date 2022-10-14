@@ -38,6 +38,7 @@ void cursesSetup(void) {
     curs_set(0);
     nodelay(stdscr, TRUE);
     keypad(stdscr, TRUE);
+    erase();
 
     return;
 }
