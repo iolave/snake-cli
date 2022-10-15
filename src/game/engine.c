@@ -11,6 +11,7 @@
 
 #define CH_SNAKE 'U+1'
 #define CH_QUIT 81
+#define CH_ENTER 10
 
 void cursesSignalHandler(int sig);
 void cursesSetup(void);
@@ -52,12 +53,9 @@ int cursesScreenManagement(void) {
     int returnCodeScreenPlay = -1;
 
     returnCodeScreenMain = cursesScreenMain();
+    if (returnCodeScreenMain == EXIT_FAILURE) return EXIT_SUCCESS;
     
-    if (returnCodeScreenMain != EXIT_SUCCESS) return EXIT_FAILURE;
-    if (returnCodeScreenMain == EXIT_SUCCESS) {
-        returnCodeScreenPlay = cursesScreenPlay();
-    }
-
+    returnCodeScreenPlay = cursesScreenPlay();
     if(returnCodeScreenPlay == EXIT_SUCCESS) return EXIT_SUCCESS;
     if(returnCodeScreenPlay == EXIT_FAILURE) return EXIT_FAILURE;
 
@@ -65,7 +63,8 @@ int cursesScreenManagement(void) {
 }
 
 int cursesScreenMain(void) {
-    static const char msgStart[] = "Press any key to start...";
+    static const char msgStart[] = "Press ENTER to start";
+    static const char msgQuit[] = "Press Q to quit";
     struct XYVector cursesScreenSize;
     int ch;
 
@@ -74,12 +73,16 @@ int cursesScreenMain(void) {
 
     do {
         ch = getch();
-        mvprintw(cursesScreenSize.y/2, (cursesScreenSize.x/2) - strlen(msgStart)/2, "%s", msgStart);
+        mvprintw(cursesScreenSize.y/2-1, (cursesScreenSize.x/2) - strlen(msgStart)/2, "%s", msgStart);
+        mvprintw(cursesScreenSize.y/2+1, (cursesScreenSize.x/2) - strlen(msgQuit)/2, "%s", msgQuit);
     } while(ch == -1);
 
-
     cursesDestroy();
-    return EXIT_SUCCESS;
+
+    if (ch == CH_ENTER) return EXIT_SUCCESS;
+    if (toupper(ch) == CH_QUIT) return EXIT_FAILURE;
+    
+    return EXIT_FAILURE;
 }
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
