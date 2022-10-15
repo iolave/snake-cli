@@ -2,7 +2,5 @@
 
 int main() {
 
-    doGame();
-
-    return 0;
+    return cursesScreenManagement();
 }

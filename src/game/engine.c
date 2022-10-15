@@ -11,23 +11,26 @@
 
 #define CH_SNAKE 'U+1'
 #define CH_QUIT 81
+#define CH_ENTER 10
 
-void gameSignalHandler(int sig);
-void gameSetup(void);
-void gameDestroy(void);
-void doGame(void);
+void cursesSignalHandler(int sig);
+void cursesSetup(void);
+void cursesDestroy(void);
+int cursesScreenManagement(void);
+int cursesScreenMain(void);
+int cursesScreenPlay(void);
 
-void gameSignalHandler(int sig) {
+void cursesSignalHandler(int sig) {
     if (sig == SIGINT) {
-        gameDestroy();
+        cursesDestroy();
         exit(sig);
     }
 }
 
-void gameSetup(void) {
+void cursesSetup(void) {
     struct sigaction act;
 
-    act.sa_handler = gameSignalHandler;
+    act.sa_handler = cursesSignalHandler;
     sigaction(SIGINT, &act, NULL);
 
     initscr();
@@ -36,12 +39,50 @@ void gameSetup(void) {
     curs_set(0);
     nodelay(stdscr, TRUE);
     keypad(stdscr, TRUE);
+    erase();
 
     return;
 }
 
-void gameDestroy(void) {
+void cursesDestroy(void) {
     endwin();
+}
+
+int cursesScreenManagement(void) {
+    int returnCodeScreenMain = -1;
+    int returnCodeScreenPlay = -1;
+
+    returnCodeScreenMain = cursesScreenMain();
+    if (returnCodeScreenMain == EXIT_FAILURE) return EXIT_SUCCESS;
+    
+    returnCodeScreenPlay = cursesScreenPlay();
+    if(returnCodeScreenPlay == EXIT_SUCCESS) return EXIT_SUCCESS;
+    if(returnCodeScreenPlay == EXIT_FAILURE) return EXIT_FAILURE;
+
+    return EXIT_FAILURE;
+}
+
+int cursesScreenMain(void) {
+    static const char msgStart[] = "Press ENTER to start";
+    static const char msgQuit[] = "Press Q to quit";
+    struct XYVector cursesScreenSize;
+    int ch;
+
+    cursesSetup();
+    cursesScreenSize = generateXyVector(COLS, LINES);
+
+    do {
+        ch = getch();
+        mvprintw(cursesScreenSize.y/2-1, (cursesScreenSize.x/2) - strlen(msgStart)/2, "%s", msgStart);
+        mvprintw(cursesScreenSize.y/2+1, (cursesScreenSize.x/2) - strlen(msgQuit)/2, "%s", msgQuit);
+    } while(ch == -1);
+
+    cursesDestroy();
+
+    if (ch == CH_ENTER) return EXIT_SUCCESS;
+    if (toupper(ch) == CH_QUIT) return EXIT_FAILURE;
+    
+    return EXIT_FAILURE;
 }
 
 struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector screenDims) {
@@ -53,7 +94,7 @@ struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector scree
     return normalizedPoint;
 }
 
-void doGame(void) {
+int cursesScreenPlay(void) {
     useconds_t gameSpeed;
     int ch;
     struct Snake *snakeHead = NULL;
@@ -69,7 +110,7 @@ void doGame(void) {
     struct Snake *snakeTail = NULL;
     static const char quitMsg[] = "Press Q to Quit";
 
-    gameSetup();
+    cursesSetup();
     gameSpeed = 300000;
 
     /* Game initialization */
@@ -130,9 +171,9 @@ void doGame(void) {
         prevSnakeTailPos = snakeTail->position;
 
         if(isOverlappingSnake(snakeHead)) {
-            gameDestroy();
+            cursesDestroy();
             freeSnake(&snakeHead);
-            exit(EXIT_SUCCESS);
+            return EXIT_FAILURE;
         }  
 
         if (ch != -1) feedSnake(&snakeHead);
@@ -140,14 +181,14 @@ void doGame(void) {
 
         snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
         if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
-            gameDestroy();
+            cursesDestroy();
             freeSnake(&snakeHead);
-            exit(EXIT_SUCCESS);
+            return EXIT_SUCCESS;
         }
         
     } while (toupper(ch) != CH_QUIT);
 
-    gameDestroy();
+    cursesDestroy();
     freeSnake(&snakeHead);
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
