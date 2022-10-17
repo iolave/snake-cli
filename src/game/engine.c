@@ -97,12 +97,14 @@ struct XYVector normalizePlanePoint(struct XYVector point, struct XYVector scree
 int cursesScreenPlay(void) {
     useconds_t gameSpeed;
     int ch;
+    struct XYVector gameBoundaries;
+    struct XYVector screenBoundaries;
     struct Snake *snakeHead = NULL;
     struct Snake *snakePtr = NULL;
     struct XYVector direction;
     struct XYVector directionTmp;
     struct XYVector currentPos;
-    struct XYVector gameBoundaries;
+
     struct XYVector snakeHeadPosNorm;
     struct XYVector prevSnakeTailPos;
     int snakeLen;
@@ -111,7 +113,7 @@ int cursesScreenPlay(void) {
     static const char quitMsg[] = "Press Q to Quit";
 
     cursesSetup();
-    gameSpeed = 300000;
+    gameSpeed = 50000;
 
     /* Game initialization */
     // Adding snake's first node
@@ -120,8 +122,13 @@ int cursesScreenPlay(void) {
     direction = calculateDirection(-1);
     snakeTail = snakeHead;
     
+    screenBoundaries = generateXyVector(COLS, LINES);
     gameBoundaries = generateXyVector(COLS, LINES-1);
     mvaddstr(gameBoundaries.y, (gameBoundaries.x-strlen(quitMsg))/2, quitMsg);
+
+    border(0,0,0,0,0,0,0,0);
+    mvhline(1, 1, screenBoundaries.y, screenBoundaries.x);
+
 
     do {
         snakeLen = snakeLength(snakeHead);
@@ -155,14 +162,14 @@ int cursesScreenPlay(void) {
         // print snake
         snakePtr = snakeHead;
         while(snakePtr != NULL) {
-            currentPos = normalizePlanePoint(snakePtr->position, gameBoundaries);
+            currentPos = normalizePlanePoint(snakePtr->position, screenBoundaries);
             mvaddch(currentPos.y, currentPos.x, CH_SNAKE);
             mvaddch(currentPos.y, currentPos.x-1, CH_SNAKE);
             snakePtr = snakePtr->next;
         }
 
         if(snakeLength(snakeHead) != 1) {
-            currentPos = normalizePlanePoint(prevSnakeTailPos, gameBoundaries);
+            currentPos = normalizePlanePoint(prevSnakeTailPos, screenBoundaries);
             mvprintw(currentPos.y, currentPos.x-1, "  ");
         }
         usleep(gameSpeed);
@@ -179,8 +186,8 @@ int cursesScreenPlay(void) {
         if (ch != -1) feedSnake(&snakeHead);
         moveSnake(&snakeHead, direction);
 
-        snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, gameBoundaries);
-        if(!isSnakeWithingBoundaries(snakeHeadPosNorm, gameBoundaries)) {
+        snakeHeadPosNorm = normalizePlanePoint(snakeHead->position, screenBoundaries);
+        if(!isSnakeWithingBoundaries(snakeHeadPosNorm, screenBoundaries)) {
             cursesDestroy();
             freeSnake(&snakeHead);
             return EXIT_SUCCESS;
